@@ -1,12 +1,12 @@
 {
-  "name": "@lifeforge/lifeforge--mrt-map-builder",
+  "name": "@lifeforge/melvinchia3636--mrt-map-builder",
   "displayName": "MRT Map Builder",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lifeforge-app/lifeforge-module-mrt-map-builder.git"
+    "url": "https://github.com/melvinchia3636/lifeforge-module-mrt-map-builder.git"
   },
-  "version": "0.0.1",
-  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "version": "0.0.2",
+  "author": "melvinchia3636 <melvinchia623600@gmail.com>",
   "description": "Build and visualize MRT railway maps.",
   "scripts": {
     "typecheck": "pnpm run typecheck:client",
