@@ -66,8 +66,8 @@ async function main() {
   let stations: DbStation[] = []
 
   try {
-    lines = (await pb.collection('railway_map__lines').getFullList()) as unknown as DbLine[]
-    stations = (await pb.collection('railway_map__stations').getFullList()) as unknown as DbStation[]
+    lines = await pb.collection('railway_map__lines').getFullList()
+    stations = await pb.collection('railway_map__stations').getFullList()
   } catch (err: unknown) {
     const errorMsg = err instanceof Error ? err.message : String(err)
     console.error('Failed to fetch data from database:', errorMsg)
@@ -83,6 +83,7 @@ async function main() {
 
   for (const line of lines) {
     const segments = line.map_paths || []
+
     if (segments.length === 0) {
       mrtLines.push({
         color: line.color,
@@ -106,6 +107,7 @@ async function main() {
     const matchedLines = station.lines
       .map(lineId => {
         const found = lines.find(l => l.id === lineId)
+
         return found ? found.name : null
       })
       .filter((name): name is string => name !== null)
@@ -116,7 +118,7 @@ async function main() {
       y: typeof station.map_data?.y === 'number' ? station.map_data.y : 0,
       name: station.name,
       lines: matchedLines,
-      type: (station.type === 'interchange' ? 'interchange' : 'station') as 'interchange' | 'station',
+      type: (station.type === 'interchange' ? 'interchange' : 'station'),
       codes: station.codes || [],
       textOffsetX: typeof station.map_data?.textOffsetX === 'number' ? station.map_data.textOffsetX : 0,
       textOffsetY: typeof station.map_data?.textOffsetY === 'number' ? station.map_data.textOffsetY : 0,
@@ -144,6 +146,7 @@ async function main() {
   }
 
   const outputPath = path.resolve(import.meta.dirname, 'mrt-map-data.json')
+
   try {
     fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2), 'utf-8')
     console.log(`Successfully wrote importable JSON to: ${outputPath}`)

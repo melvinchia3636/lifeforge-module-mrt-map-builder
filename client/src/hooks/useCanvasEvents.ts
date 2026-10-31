@@ -91,7 +91,7 @@ function useCanvasEvents() {
         ...prev,
         {
           type: 'line_point',
-          lineIndex: workingStateRef.current!.selectedLine!.index!,
+          lineIndex: workingStateRef.current.selectedLine.index!,
           coordinate: coord
         }
       ])
